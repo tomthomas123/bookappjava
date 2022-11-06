@@ -256,6 +256,46 @@ public class bookapp {
                     }
 
                     break;
+                case 9:
+                    System.out.println("Display the total amount in return date");
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librarydb", "root", "");
+                        String sql = "SELECT i.user_id,i.book_id,i.issue_date,i.return_date,DATEDIFF(i.return_date,i.issue_date) AS datediff,DATEDIFF(i.return_date,i.issue_date)*b.`book_rentprice` AS amount from issue_book i JOIN books b ON i.book_id = b.id";
+
+                        Statement stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while(rs.next()){
+                            String fetchUserId = rs.getString("user_id");
+                            String fetchBookId = rs.getString("book_id");
+                            String fetchIssueDate = rs.getString("issue_date");
+                            String fetchReturnDate = rs.getString("return_date");
+                            String fetchDateDiff = rs.getString("datediff");
+                            String fetchAmount = rs.getString("amount");
+
+                            System.out.print("User Id: "+fetchUserId+" | ");
+                            System.out.print(" Book Id : "+fetchBookId+" | ");
+                            System.out.print(" IssueDate : "+fetchIssueDate+" | ");
+                            System.out.print(" ReturnDate : "+fetchReturnDate+" | ");
+                            System.out.print(" DateDiff : "+fetchDateDiff+" | ");
+                            System.out.print(" Amount : "+fetchAmount+" | "+"\n");
+
+                        }
+
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
+
+
+                    break;
+                case 10:
+                    System.out.println("Exited Menu..");
+                    System.exit(0);
+
+
+
+
             }
         }
     }
